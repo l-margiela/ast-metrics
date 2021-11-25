@@ -12,6 +12,26 @@ keeping the source code free of tedious metrics calls.
 This is very much against Go's priciples and I wouldn't use it anywhere
 near production code, although it was fun to write and reason about.
 
+## Example
+
+```go
+if age < 1 {
+	time.Sleep(time.Second * 2)
+	fmt.Println("Invalid age")
+}
+```
+
+gets transformed into
+
+```go
+if age < 1 {
+	metricsStart2 := time.Now()
+	time.Sleep(time.Second * 2)
+	fmt.Println("Invalid age")
+	fmt.Printf("Block time measurement (ID 2); time: %s\n", time.Since(metricsStart2))
+}
+```
+
 
 ## Tests
 
